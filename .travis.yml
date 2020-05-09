@@ -1,0 +1,12 @@
+language : generic
+sudo: required
+# Tell Travis we need a copy of Docker Running
+services:
+  - docker
+# Build our image using Docker.dev
+before_install:
+  - docker build -t ritishadhikari/docker-react1 -f Dockerfile.dev .
+# Tell Travis how to run our test suite
+script:
+  - docker run -e CI=true ritishadhikari/docker-react npm run test
+# - docker run ritishadhikari/docker-react1:latest npm run test -- --coverage
