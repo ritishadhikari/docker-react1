@@ -1,0 +1,19 @@
+version: '3'
+services:
+    web:   # web container is responsible for hosting our development server
+      build:
+        context: . #look in the current working directory
+        dockerfile: Dockerfile.dev # look for dockerfile.dev inside the current working directory
+      ports:
+        - "3000:3000"
+      volumes:
+        - /app/node_modules
+        - .:/app
+    tests:  # test container is responsible for hosting our test and rerunning anytime files in ...
+      build:                                              #... our volumes change
+        context: .
+        dockerfile: Dockerfile.dev
+      volumes:
+        - /app/node_modules
+        - .:/app
+      command : ["npm","run","test"]
